@@ -1,0 +1,16 @@
+variable "ami-instance-type-bastion" { type = string }
+variable "eks-cluster-name" { type = string }
+variable "instance-type-bastion" { type = string }
+variable "bastion-tag-name" { type = string }
+variable "eks-cluster-verison" { type = string }
+variable "eks-cluster-role" { type = string }
+variable "eks-node-group-role" { type = string }
+variable "node-group-name" { type = string }
+variable "reigon" { type = string }
+variable "main_vpc_cidr" { type = string }
+variable "public_subnet_1_cidr" { type = string }
+variable "private_subnet_1_cidr" { type = string }
+variable "public_subnet_2_cidr" { type = string }
+variable "private_subnet_2_cidr" { type = string }
+variable "subnet_1_az" { type = string }
+variable "subnet_2_az" { type = string }
