@@ -14,6 +14,43 @@ resource "aws_iam_role" "nodes_general" {
   })
 }
 
+resource "aws_iam_policy" "ebs_policy" {
+  name = "ebs-policy"
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "ec2:AttachVolume",
+          "ec2:DetachVolume",
+          "ec2:CreateSnapshot",
+          "ec2:CreateTags",
+          "ec2:CreateVolume",
+          "ec2:DeleteSnapshot",
+          "ec2:DeleteTags",
+          "ec2:DeleteVolume",
+          "ec2:DescribeAvailabilityZones",
+          "ec2:DescribeInstances",
+          "ec2:DescribeSnapshots",
+          "ec2:DescribeTags",
+          "ec2:DescribeVolumes",
+          "ec2:DescribeVolumesModifications",
+          "ec2:DetachVolume",
+          "ec2:ModifyVolume",
+          "ec2:DescribeRegions"
+        ]
+        Resource = "*"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "amazone_eks_ebs_policy" {
+  policy_arn = aws_iam_policy.ebs_policy.arn
+  role       = aws_iam_role.nodes_general.name
+}
+
 
 resource "aws_iam_role_policy_attachment" "amazon_eks_worker_node_policy_general" {
   # https://github.com/SummitRoute/aws_managed_policies/blob/master/policies/AmazonEKSWorkerNodePolicy
@@ -61,7 +98,7 @@ resource "aws_eks_node_group" "nodes_general" {
   # Force version update if existing pods are unable to be drained due to a pod disruption budget issue.
   force_update_version = false
 
-  instance_types = ["t2.micro"]
+  instance_types = ["t3.xlarge"]
 
   labels = {
     role = "nodes-general"
