@@ -2,22 +2,26 @@ image: hashicorp/terraform
 
 pipelines:
   custom:
-    Deploy-to-prod-MFS:
+    Deploy-to-prod-capstone-project:
       - step:
-          name: Terraform plan for MFS
+          name: Terraform plan for capstone project
           script:
+            - cd aws-infra
             - terraform init
-            - terraform validate
-            - terraform plan -out=terraform.tfplan
-              variables:
-                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
-                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
-                AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
-          artifacts:
-            - terraform.tfplan
+            - terraform plan -input=false
+            variables:
+              - AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+              - AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+              - AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
       - step:
           trigger: manual
           name: Terraform apply (Manual)
           script:
-            - terraform apply terraform.tfplan
-          
+            - cd aws-infra
+            - terraform init
+            - terraform plan -input=false
+            - terraform apply -auto-approve
+            variables:
+              - AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+              - AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+              - AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
