@@ -1,6 +1,6 @@
 #VPC vars
 main_vpc_cidr = "10.0.0.0/16"
-reigon        = "ap-southeast-1"
+region        = "ap-southeast-1"
 
 #Subnet vars
 public_subnet_1_cidr  = "10.0.1.0/24"
@@ -11,7 +11,7 @@ subnet_1_az           = "ap-southeast-1a"
 subnet_2_az           = "ap-southeast-1b"
 
 #EKS vars
-eks-cluster-name    = "eks-test-cluster"
+eks-cluster-name    = "eks-capstone-cluster"
 eks-cluster-verison = "1.24"
 eks-cluster-role    = "eks-node-group-general"
 eks-node-group-role = "eks-node-group-general"

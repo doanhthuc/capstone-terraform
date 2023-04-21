@@ -1,6 +1,6 @@
 resource "aws_network_acl" "public_nacl" {
   vpc_id     = aws_vpc.main.id
-  subnet_ids = [aws_subnet.public_1.id]
+  subnet_ids = [aws_subnet.public_1.id, aws_subnet.public_2.id]
 
   ingress {
     protocol   = "-1"
